@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mister Atez | Director Audiovisual y Creador IA</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- EL PORTERO: Script de Netlify Identity agregado a la raíz -->
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
         body { 
             background-color: #121212; 
@@ -94,5 +97,19 @@
         </footer>
 
     </div>
+
+    <!-- Script para capturar confirmaciones y redirigir al foro -->
+    <script>
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        // Al iniciar sesión o confirmar correo, te lleva directo a la fogata
+                        document.location.href = "/lafogata/";
+                    });
+                }
+            });
+        }
+    </script>
 </body>
 </html>
