@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IGNIS: Prende tu mente | La Fogata</title>
-    <!-- Script oficial de Netlify Identity para el registro -->
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
         :root {
@@ -26,140 +25,66 @@
             justify-content: center;
         }
 
-        .container {
-            width: 100%;
-            max-width: 800px;
-        }
+        .container { width: 100%; max-width: 800px; }
 
         header {
             border-bottom: 2px dashed var(--accent-red);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            text-align: center;
+            padding-bottom: 15px; margin-bottom: 20px; text-align: center;
         }
 
-        h1 {
-            color: var(--accent-red);
-            font-size: 1.8rem;
-            margin: 0 0 5px 0;
-        }
-
-        .subtitle {
-            font-size: 0.9rem;
-            color: #888;
-            margin-bottom: 15px;
-        }
-
-        /* Estilos para el botón de Netlify */
-        .login-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+        h1 { color: var(--accent-red); font-size: 1.8rem; margin: 0 0 5px 0; }
+        .subtitle { font-size: 0.9rem; color: #888; margin-bottom: 15px; }
+        .login-container { text-align: center; margin-bottom: 20px; }
 
         .manifesto {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            margin-bottom: 25px;
-            font-size: 0.9rem;
-            line-height: 1.4;
+            background-color: var(--panel-bg); border: 1px solid var(--border-color);
+            padding: 15px; margin-bottom: 25px; font-size: 0.9rem; line-height: 1.4;
         }
 
-        .manifesto span {
-            color: var(--accent-red);
-            font-weight: bold;
-        }
-
-        /* Caja de comentarios oculta por defecto hasta iniciar sesión */
         .post-box {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            margin-bottom: 25px;
-            display: none; 
+            background-color: var(--panel-bg); border: 1px solid var(--border-color);
+            padding: 15px; margin-bottom: 25px; display: none; 
         }
 
         .post-box textarea {
-            width: 100%;
-            background-color: #0b0b0b;
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            font-family: var(--font-mono);
-            padding: 10px;
-            resize: vertical;
-            height: 80px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
+            width: 100%; background-color: #0b0b0b; border: 1px solid var(--border-color);
+            color: var(--text-color); font-family: var(--font-mono); padding: 10px;
+            resize: vertical; height: 80px; box-sizing: border-box; margin-bottom: 10px;
         }
 
         .post-box input[type="text"] {
-            width: 100%;
-            background-color: #1a1a1a;
-            border: 1px dashed var(--border-color);
-            color: #888;
-            font-family: var(--font-mono);
-            padding: 8px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-            cursor: not-allowed;
+            width: 100%; background-color: #1a1a1a; border: 1px dashed var(--border-color);
+            color: #888; font-family: var(--font-mono); padding: 8px;
+            box-sizing: border-box; margin-bottom: 10px; cursor: not-allowed;
         }
 
         button, .netlify-identity-button {
-            background-color: var(--accent-red);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            font-family: var(--font-mono);
-            font-weight: bold;
-            cursor: pointer;
+            background-color: var(--accent-red); color: white; border: none;
+            padding: 8px 15px; font-family: var(--font-mono); font-weight: bold; cursor: pointer;
         }
 
-        button:hover {
-            background-color: #e02828;
-        }
+        button:hover { background-color: #e02828; }
 
-        .thread-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+        .thread-list { display: flex; flex-direction: column; gap: 15px; }
 
         .comment-card {
-            background-color: var(--panel-bg);
-            border-left: 3px solid var(--accent-red);
-            border-top: 1px solid var(--border-color);
-            border-right: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            padding: 15px;
+            background-color: var(--panel-bg); border-left: 3px solid var(--accent-red);
+            border-top: 1px solid var(--border-color); border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color); padding: 15px;
         }
 
         .comment-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: #888;
-            margin-bottom: 8px;
-            border-bottom: 1px dashed var(--border-color);
+            display: flex; justify-content: space-between; font-size: 0.8rem;
+            color: #888; margin-bottom: 8px; border-bottom: 1px dashed var(--border-color);
             padding-bottom: 5px;
         }
 
-        .comment-author {
-            color: var(--text-color);
-            font-weight: bold;
-        }
-
-        .comment-body {
-            font-size: 0.95rem;
-            white-space: pre-wrap;
-        }
+        .comment-author { color: var(--text-color); font-weight: bold; }
+        .comment-body { font-size: 0.95rem; white-space: pre-wrap; }
 
         footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 0.8rem;
-            color: #555;
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
+            text-align: center; margin-top: 40px; font-size: 0.8rem;
+            color: #555; border-top: 1px solid var(--border-color); padding-top: 15px;
         }
     </style>
 </head>
@@ -170,7 +95,6 @@
             <h1>[ IGNIS: LA FOGATA ]</h1>
             <div class="subtitle">Foro Comunitario / Prende tu mente / Filtro IEEH</div>
             
-            <!-- Botón de Login de Netlify -->
             <div class="login-container">
                 <div data-netlify-identity-menu></div>
             </div>
@@ -180,7 +104,6 @@
             > <strong>Manifiesto:</strong> El internet nos prometió conexión pero nos entregó una jaula de egos y contenido desechable. Aquí no hay scroll infinito ni algoritmos invisibles. Volvemos al texto, al foco y a la conversación real. Identifícate arriba para encender tu idea.
         </div>
 
-        <!-- Formulario bloqueado a usuarios registrados -->
         <div class="post-box" id="postBox">
             <h3 style="margin-top:0; font-size:1rem; color:var(--accent-red);">> ENCIENDE UN HILO</h3>
             <input type="text" id="authorName" disabled />
@@ -188,10 +111,7 @@
             <button onclick="addComment()">LANZAR A LA FOGATA</button>
         </div>
 
-        <!-- Listado de comentarios -->
         <div class="thread-list" id="threadContainer">
-            
-            <!-- HILO PRINCIPAL FIJADO -->
             <div class="comment-card">
                 <div class="comment-header">
                     <span class="comment-author">Mister Atez</span>
@@ -199,7 +119,6 @@
                 </div>
                 <div class="comment-body">Okey gente! como estan? yo aqui pensando en la inmortalidad del cangrejo mientras camino. estaba pensando en ¿cuando caminan ustedes? yo con la gala normalmente caminamos una hora al dia, porque a ella le toca todos los dias salir minimo una horita y porque es el mismo para ella. aunque aveces trato que una vez al mes llevarmela a la oficina y bajar caminando hasta la casa que son como 3 horas, dependiendo del ritmo y las cosas que vaya viendo. ¿Cuanto caminan wn(hueon)?¿Cuanto es normal caminar?</div>
             </div>
-
         </div>
 
         <footer>
@@ -208,7 +127,6 @@
     </div>
 
     <script>
-        // Lógica de Netlify Identity
         if (window.netlifyIdentity) {
             window.netlifyIdentity.on("init", user => {
                 if (!user) {
@@ -221,7 +139,6 @@
             });
         }
 
-        // Función para agregar comentarios locales
         function addComment() {
             const author = document.getElementById('authorName').value;
             const text = document.getElementById('commentText').value.trim();
