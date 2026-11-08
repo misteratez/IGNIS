@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IGNIS: Prende tu mente | La Fogata</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --panel-bg: #1a1a1a;
+            --text-color: #e0e0e0;
+            --accent-red: #ff3b3b;
+            --border-color: #333333;
+            --font-mono: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-mono);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        header {
+            border-bottom: 2px dashed var(--accent-red);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--accent-red);
+            font-size: 1.8rem;
+            margin: 0 0 5px 0;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .manifesto {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .manifesto span {
+            color: var(--accent-red);
+            font-weight: bold;
+        }
+
+        /* Sección para comentar */
+        .post-box {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+
+        .post-box textarea {
+            width: 100%;
+            background-color: #0b0b0b;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-family: var(--font-mono);
+            padding: 10px;
+            resize: vertical;
+            height: 80px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .post-box input[type="text"] {
+            width: 100%;
+            background-color: #0b0b0b;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-family: var(--font-mono);
+            padding: 8px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-family: var(--font-mono);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e02828;
+        }
+
+        /* Hilos del Foro */
+        .thread-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .comment-card {
+            background-color: var(--panel-bg);
+            border-left: 3px solid var(--accent-red);
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 8px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        .comment-author {
+            color: var(--text-color);
+            font-weight: bold;
+        }
+
+        .comment-body {
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: #555;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>[ IGNIS: LA FOGATA ]</h1>
+            <div class="subtitle">Foro Comunitario / Prende tu mente / Filtro IEEH</div>
+        </header>
+
+        <div class="manifesto">
+            > <strong>Manifiesto:</strong> El internet nos prometió conexión pero nos entregó una jaula de egos y contenido desechable. Aquí no hay scroll infinito ni algoritmos invisibles. Volvemos al texto, al foco y a la conversación real para construir nuestra señal local paso a paso.
+        </div>
+
+        <!-- Formulario para dejar ideas/comentarios -->
+        <div class="post-box">
+            <h3 style="margin-top:0; font-size:1rem; color:var(--accent-red);">> ENCIENDE UN HILO (Escribe tu idea)</h3>
+            <input type="text" id="authorName" placeholder="Tu nombre o alias..." />
+            <textarea id="commentText" placeholder="Comparte una idea, un tema para educar, informar o debatir sin prisa..."></textarea>
+            <button onclick="addComment()">LANZAR A LA FOGATA</button>
+        </div>
+
+        <!-- Listado de comentarios -->
+        <div class="thread-list" id="threadContainer">
+            <!-- Comentario de ejemplo 1 -->
+            <div class="comment-card">
+                <div class="comment-header">
+                    <span class="comment-author">Mister Atez</span>
+                    <span>2026-11-08 [Hilo Principal]</span>
+                </div>
+                <div class="comment-body">Bienvenidos a la fogata. Partimos con texto puro, sin pantallas que nos aturdan. ¿Qué temas les tinca que integremos en los bloques del futuro canal local bajo nuestro filtro IEEH? Los leo.</div>
+            </div>
+
+            <!-- Comentario de ejemplo 2 -->
+            <div class="comment-card">
+                <div class="comment-header">
+                    <span class="comment-author">Vecino del Barrio</span>
+                    <span>Hace un momento</span>
+                </div>
+                <div class="comment-body">Excelente iniciativa. Ya era hora de apagar un rato el ruido de las redes y volver a proponer cosas locales que de verdad eduquen y nos hagan salir a la calle.</div>
+            </div>
+        </div>
+
+        <footer>
+            IGNIS 2026 // Espacio libre de algoritmos vacíos.
+        </footer>
+    </div>
+
+    <script>
+        function addComment() {
+            const author = document.getElementById('authorName').value.trim() || 'Anónimo';
+            const text = document.getElementById('commentText').value.trim();
+
+            if (!text) {
+                alert('Escribe algo para encender la fogata.');
+                return;
+            }
+
+            const container = document.getElementById('threadContainer');
+            
+            const card = document.createElement('div');
+            card.className = 'comment-card';
+
+            const header = document.createElement('div');
+            header.className = 'comment-header';
+            
+            const authorSpan = document.createElement('span');
+            authorSpan.className = 'comment-author';
+            authorSpan.textContent = author;
+
+            const dateSpan = document.createElement('span');
+            const now = new Date();
+            dateSpan.textContent = now.toISOString().slice(0,10) + ' [Nuevo]';
+
+            header.appendChild(authorSpan);
+            header.appendChild(dateSpan);
+
+            const body = document.createElement('div');
+            body.className = 'comment-body';
+            body.textContent = text;
+
+            card.appendChild(header);
+            card.appendChild(body);
+
+            // Insertar arriba del todo
+            container.prepend(card);
+
+            // Limpiar inputs
+            document.getElementById('commentText').value = '';
+            document.getElementById('authorName').value = '';
+        }
+    </script>
+</body>
+</html>
