@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mister Atez | Director Audiovisual y Creador IA</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- EL PORTERO: Script de Netlify Identity agregado a la raíz -->
-    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
         body { 
             background-color: #121212; 
@@ -24,92 +21,89 @@
 <body class="p-6 md:p-12 flex justify-center">
     <div class="max-w-3xl w-full">
         
+        <!-- Cabecera de Perfil -->
         <header class="text-center mb-10 border-b-2 border-dashed border-[#ff3b3b] pb-6">
             <h1 class="text-4xl font-bold accent mb-2">@MISTERATEZ</h1>
-            <p class="text-gray-400 text-sm">Director Audiovisual / Creador IA / Filtro IEEH</p>
+            <p class="text-gray-400 text-sm">Director Audiovisual / Streamings / Creador IA / Gestión de Proyectos.</p>
         </header>
 
+        <!-- Hub de Enlaces Centrales -->
         <section class="flex flex-col gap-4 mb-12">
             <a href="/lafogata" class="bg-[#ff3b3b] hover:bg-red-700 text-white text-center font-bold py-3 px-4 rounded-md transition-colors">
-                🔥 ENTRAR A LA FOGATA (Foro Comunitario)
+                🔥 LA FOGATA (Foro Comunitario)
             </a>
-            <a href="https://patreon.com/misteratez" target="_blank" class="bg-panel hover:bg-gray-800 text-center font-bold py-3 px-4 rounded-md transition-colors border-l-4 border-[#ff3b3b]">
-                ☕ APOYAR EN PATREON (Prompts y Detrás de Cámaras)
+            <a href="https://www.patreon.com/misteratez" target="_blank" class="bg-panel hover:bg-gray-800 text-center font-bold py-3 px-4 rounded-md transition-colors border-l-4 border-[#ff3b3b]">
+                ☕ APOYAR EN PATREON
             </a>
-            <a href="#" target="_blank" class="bg-panel hover:bg-gray-800 text-center font-bold py-3 px-4 rounded-md transition-colors">
-                📺 YOUTUBE (Canal IGNIS)
+            <a href="https://www.youtube.com/misteratez" target="_blank" class="bg-panel hover:bg-gray-800 text-center font-bold py-3 px-4 rounded-md transition-colors">
+                📺 YOUTUBE
+            </a>
+            <a href="https://www.instagram.com/misteratez" target="_blank" class="bg-panel hover:bg-gray-800 text-center font-bold py-3 px-4 rounded-md transition-colors">
+                📸 INSTAGRAM
+            </a>
+            <a href="https://www.linkedin.com/in/jeanfrancoatez/" target="_blank" class="bg-panel hover:bg-gray-800 text-center font-bold py-3 px-4 rounded-md transition-colors">
+                💼 LINKEDIN
             </a>
         </section>
 
+        <!-- Grilla de Proyectos Destacados -->
         <section>
             <h2 class="text-xl accent font-bold mb-6">> PROYECTOS DESTACADOS</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
+                <!-- Proyecto 1: EnLaCocina -->
+                <div class="bg-panel p-5 rounded-md flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-2">EnLaCocina</h3>
+                        <p class="text-sm text-gray-400 mb-4">Truquitos de la vida para sobrevivir en la cocina con pocas lucas y bien rico.</p>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=JHIWnAB2L10" target="_blank" class="bg-transparent border border-[#ff3b3b] text-[#ff3b3b] hover:bg-[#ff3b3b] hover:text-white text-xs font-bold py-2 px-3 rounded mt-4 text-center transition-colors">VER VIDEO</a>
+                </div>
+
+                <!-- Proyecto 2: Creando con IA -->
+                <div class="bg-panel p-5 rounded-md flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-2">Creando con IA</h3>
+                        <p class="text-sm text-gray-400 mb-4">Flujos de trabajo y experimentación con Inteligencia Artificial Generativa.</p>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=mZOmIL9_GyY" target="_blank" class="bg-transparent border border-[#ff3b3b] text-[#ff3b3b] hover:bg-[#ff3b3b] hover:text-white text-xs font-bold py-2 px-3 rounded mt-4 text-center transition-colors">VER VIDEO</a>
+                </div>
+
+                <!-- Proyecto 3: Vlogs -->
+                <div class="bg-panel p-5 rounded-md flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-2">Vlogs</h3>
+                        <p class="text-sm text-gray-400 mb-4">La Inmortalidad del Cangrejo: Reflexiones urbanas, desconexión digital y el lado humano.</p>
+                    </div>
+                    <a href="https://youtu.be/dr1cibUz-Ps?si=kX4dejcPH7Ippvp-" target="_blank" class="bg-transparent border border-[#ff3b3b] text-[#ff3b3b] hover:bg-[#ff3b3b] hover:text-white text-xs font-bold py-2 px-3 rounded mt-4 text-center transition-colors">VER VLOG</a>
+                </div>
+
+                <!-- Proyecto 4: Notimono Popular -->
                 <div class="bg-panel p-5 rounded-md flex flex-col justify-between">
                     <div>
                         <h3 class="font-bold text-lg mb-2">Notimono Popular</h3>
-                        <p class="text-sm text-gray-400 mb-4">Noticiero animado con Capu y Zulu generado con IA. Contingencia y medioambiente bajo el filtro IEEH.</p>
+                        <p class="text-sm text-gray-400 mb-4">Noticiero animado con Capu y Zulu. Contingencia y medioambiente bajo el filtro IEEH.</p>
                     </div>
-                    <div class="flex gap-2 mt-4 border-t border-[#333] pt-4">
-                        <a href="mailto:tu@email.com?subject=Consulta%20sobre%20Notimono%20Popular" class="bg-[#ff3b3b] hover:bg-red-700 text-white text-xs font-bold py-2 px-3 rounded flex-1 text-center transition-colors">EMAIL</a>
-                        <a href="https://instagram.com/misteratez" target="_blank" class="bg-transparent border border-[#ff3b3b] text-[#ff3b3b] hover:bg-[#ff3b3b] hover:text-white text-xs font-bold py-2 px-3 rounded flex-1 text-center transition-colors">INSTAGRAM</a>
-                    </div>
+                    <a href="https://www.instagram.com/puraswebiadas" target="_blank" class="bg-[#ff3b3b] hover:bg-red-700 text-white text-xs font-bold py-2 px-3 rounded mt-4 text-center transition-colors">VER EN INSTAGRAM</a>
                 </div>
 
-                <div class="bg-panel p-5 rounded-md flex flex-col justify-between">
+                <!-- Proyecto 5: Próximos Proyectos -->
+                <div class="bg-panel p-5 rounded-md flex flex-col justify-between md:col-span-2">
                     <div>
-                        <h3 class="font-bold text-lg mb-2">La Inmortalidad del Cangrejo</h3>
-                        <p class="text-sm text-gray-400 mb-4">Reflexiones urbanas, desconexión digital y caminatas con Gala. El lado más humano del proyecto.</p>
+                        <h3 class="font-bold text-lg mb-2">Próximos Proyectos</h3>
+                        <p class="text-sm text-gray-400 mb-4">Espacio reservado para futuras producciones, el avance de la señal local IGNIS y contenido exclusivo.</p>
                     </div>
-                    <div class="flex gap-2 mt-4 border-t border-[#333] pt-4">
-                        <a href="mailto:tu@email.com?subject=Consulta%20sobre%20La%20Inmortalidad%20del%20Cangrejo" class="bg-[#ff3b3b] hover:bg-red-700 text-white text-xs font-bold py-2 px-3 rounded flex-1 text-center transition-colors">EMAIL</a>
-                        <a href="https://instagram.com/misteratez" target="_blank" class="bg-transparent border border-[#ff3b3b] text-[#ff3b3b] hover:bg-[#ff3b3b] hover:text-white text-xs font-bold py-2 px-3 rounded flex-1 text-center transition-colors">INSTAGRAM</a>
-                    </div>
-                </div>
-
-                <div class="bg-panel p-5 rounded-md flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-bold text-lg mb-2">Próximo Proyecto</h3>
-                        <p class="text-sm text-gray-400 mb-4">En fase de desarrollo. Integrando herramientas generativas sin perder el pulso humano de la creación.</p>
-                    </div>
-                    <div class="flex gap-2 mt-4 border-t border-[#333] pt-4">
-                        <a href="mailto:tu@email.com?subject=Consulta%20sobre%20Proximo%20Proyecto%201" class="bg-[#ff3b3b] hover:bg-red-700 text-white text-xs font-bold py-2 px-3 rounded flex-1 text-center transition-colors">EMAIL</a>
-                        <a href="https://instagram.com/misteratez" target="_blank" class="bg-transparent border border-[#ff3b3b] text-[#ff3b3b] hover:bg-[#ff3b3b] hover:text-white text-xs font-bold py-2 px-3 rounded flex-1 text-center transition-colors">INSTAGRAM</a>
-                    </div>
-                </div>
-
-                <div class="bg-panel p-5 rounded-md flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-bold text-lg mb-2">Próximo Proyecto</h3>
-                        <p class="text-sm text-gray-400 mb-4">Espacio reservado para las futuras cápsulas de la parrilla programática de IGNIS 24/7.</p>
-                    </div>
-                    <div class="flex gap-2 mt-4 border-t border-[#333] pt-4">
-                        <a href="mailto:tu@email.com?subject=Consulta%20sobre%20Proximo%20Proyecto%202" class="bg-[#ff3b3b] hover:bg-red-700 text-white text-xs font-bold py-2 px-3 rounded flex-1 text-center transition-colors">EMAIL</a>
-                        <a href="https://instagram.com/misteratez" target="_blank" class="bg-transparent border border-[#ff3b3b] text-[#ff3b3b] hover:bg-[#ff3b3b] hover:text-white text-xs font-bold py-2 px-3 rounded flex-1 text-center transition-colors">INSTAGRAM</a>
-                    </div>
+                    <a href="https://www.patreon.com/misteratez" target="_blank" class="bg-panel hover:bg-gray-800 border border-[#333333] text-white text-xs font-bold py-2 px-3 rounded mt-4 text-center transition-colors border-l-4 border-l-[#ff3b3b]">VER EN PATREON</a>
                 </div>
 
             </div>
         </section>
 
+        <!-- Pie de página -->
         <footer class="mt-12 text-center text-gray-500 text-xs border-t border-[#333] pt-6">
             Mister Atez 2026 // Informar, Educar, Entretener, Humano.
         </footer>
 
     </div>
-
-    <!-- Script para capturar confirmaciones y redirigir al foro -->
-    <script>
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => {
-                        // Al iniciar sesión o confirmar correo, te lleva directo a la fogata
-                        document.location.href = "/lafogata/";
-                    });
-                }
-            });
-        }
-    </script>
 </body>
 </html>
