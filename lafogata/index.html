@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IGNIS: Prende tu mente | La Fogata</title>
+    <!-- Script oficial de Netlify Identity para el registro -->
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
         :root {
@@ -63,7 +64,8 @@
             padding: 8px 15px; font-family: var(--font-mono); font-weight: bold; cursor: pointer;
         }
 
-        button:hover { background-color: #e02828; }
+        button:hover:not(:disabled) { background-color: #e02828; }
+        button:disabled { background-color: #555; cursor: wait; }
 
         .thread-list { display: flex; flex-direction: column; gap: 15px; }
 
@@ -72,7 +74,7 @@
             border-top: 1px solid var(--border-color); border-right: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color); padding: 15px;
         }
-
+        
         .comment-header {
             display: flex; justify-content: space-between; font-size: 0.8rem;
             color: #888; margin-bottom: 8px; border-bottom: 1px dashed var(--border-color);
@@ -94,85 +96,122 @@
         <header>
             <h1>[ IGNIS: LA FOGATA ]</h1>
             <div class="subtitle">Foro Comunitario / Prende tu mente / Filtro IEEH</div>
-            
-            <div class="login-container">
-                <div data-netlify-identity-menu></div>
-            </div>
+            <div class="login-container"><div data-netlify-identity-menu></div></div>
         </header>
 
         <div class="manifesto">
-            > <strong>Manifiesto:</strong> El internet nos prometió conexión pero nos entregó una jaula de egos y contenido desechable. Aquí no hay scroll infinito ni algoritmos invisibles. Volvemos al texto, al foco y a la conversación real. Identifícate arriba para encender tu idea.
+            > <strong>Manifiesto:</strong> El internet nos prometió conexión pero nos entregó una jaula de egos. Volvemos al texto, al foco y a la conversación real. Identifícate arriba para encender tu idea.
         </div>
 
         <div class="post-box" id="postBox">
             <h3 style="margin-top:0; font-size:1rem; color:var(--accent-red);">> ENCIENDE UN HILO</h3>
             <input type="text" id="authorName" disabled />
             <textarea id="commentText" placeholder="Comparte una idea, un tema para educar, informar o debatir sin prisa..."></textarea>
-            <button onclick="addComment()">LANZAR A LA FOGATA</button>
+            <button id="postBtn">LANZAR A LA FOGATA</button>
         </div>
 
         <div class="thread-list" id="threadContainer">
-            <div class="comment-card">
-                <div class="comment-header">
-                    <span class="comment-author">Mister Atez</span>
-                    <span>[Hilo Fundacional]</span>
-                </div>
-                <div class="comment-body">Okey gente! como estan? yo aqui pensando en la inmortalidad del cangrejo mientras camino. estaba pensando en ¿cuando caminan ustedes? yo con la gala normalmente caminamos una hora al dia, porque a ella le toca todos los dias salir minimo una horita y porque es el mismo para ella. aunque aveces trato que una vez al mes llevarmela a la oficina y bajar caminando hasta la casa que son como 3 horas, dependiendo del ritmo y las cosas que vaya viendo. ¿Cuanto caminan wn(hueon)?¿Cuanto es normal caminar?</div>
-            </div>
+            <p style="text-align:center; color:#888; font-size:0.9rem;">Sincronizando con la base de datos...</p>
         </div>
 
-        <footer>
-            IGNIS 2026 // Espacio libre de algoritmos vacíos.
-        </footer>
+        <footer>IGNIS 2026 // Espacio libre de algoritmos vacíos.</footer>
     </div>
 
-    <script>
+    <!-- Módulos de Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+
+        // Tu configuración maestra de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBDQ7km9lvkDnGxGfHUhBBdxOBsJbNvvMI",
+            authDomain: "ignis-fogata.firebaseapp.com",
+            projectId: "ignis-fogata",
+            storageBucket: "ignis-fogata.firebasestorage.app",
+            messagingSenderId: "1018003778385",
+            appId: "1:1018003778385:web:eae0e88e02e3f4561a0170"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Lógica de Netlify Identity
+        let currentUser = null;
         if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => { document.location.reload(); });
-                } else {
-                    document.getElementById('postBox').style.display = 'block';
-                    const userName = user.user_metadata.full_name || user.email.split('@')[0];
-                    document.getElementById('authorName').value = userName;
-                }
-            });
+            window.netlifyIdentity.on("init", user => { currentUser = user; handleAuthChange(); });
+            window.netlifyIdentity.on("login", user => { currentUser = user; handleAuthChange(); window.netlifyIdentity.close(); });
+            window.netlifyIdentity.on("logout", () => { currentUser = null; handleAuthChange(); });
         }
 
-        function addComment() {
+        function handleAuthChange() {
+            if (currentUser) {
+                document.getElementById('postBox').style.display = 'block';
+                const userName = currentUser.user_metadata?.full_name || currentUser.email.split('@')[0];
+                document.getElementById('authorName').value = userName;
+            } else {
+                document.getElementById('postBox').style.display = 'none';
+            }
+        }
+
+        // Leer comentarios en tiempo real desde Firebase
+        const q = query(collection(db, "comentarios"), orderBy("createdAt", "desc"));
+        onSnapshot(q, (snapshot) => {
+            const container = document.getElementById('threadContainer');
+            container.innerHTML = ''; 
+            
+            if (snapshot.empty) {
+                container.innerHTML = '<p style="text-align:center; color:#888;">La fogata está esperando el primer hilo...</p>';
+                return;
+            }
+
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const card = document.createElement('div');
+                card.className = 'comment-card';
+                
+                const dateText = data.createdAt ? data.createdAt.toDate().toISOString().slice(0,10) : 'Justo ahora';
+
+                // Se construye el HTML interno
+                const header = document.createElement('div');
+                header.className = 'comment-header';
+                header.innerHTML = `<span class="comment-author">${data.author}</span><span>${dateText}</span>`;
+
+                const body = document.createElement('div');
+                body.className = 'comment-body';
+                body.textContent = data.text; // Seguro contra inyección de código
+
+                card.appendChild(header);
+                card.appendChild(body);
+                container.appendChild(card);
+            });
+        });
+
+        // Enviar nuevo comentario a Firebase
+        document.getElementById('postBtn').addEventListener('click', async () => {
             const author = document.getElementById('authorName').value;
             const text = document.getElementById('commentText').value.trim();
 
             if (!text) { alert('Escribe algo para encender la fogata.'); return; }
 
-            const container = document.getElementById('threadContainer');
-            const card = document.createElement('div');
-            card.className = 'comment-card';
+            const btn = document.getElementById('postBtn');
+            btn.disabled = true;
+            btn.innerText = 'ENVIANDO...';
 
-            const header = document.createElement('div');
-            header.className = 'comment-header';
-            
-            const authorSpan = document.createElement('span');
-            authorSpan.className = 'comment-author';
-            authorSpan.textContent = author;
+            try {
+                await addDoc(collection(db, "comentarios"), {
+                    author: author,
+                    text: text,
+                    createdAt: serverTimestamp()
+                });
+                document.getElementById('commentText').value = '';
+            } catch (error) {
+                console.error("Error guardando:", error);
+                alert('Hubo un error de conexión con la base de datos.');
+            }
 
-            const dateSpan = document.createElement('span');
-            const now = new Date();
-            dateSpan.textContent = now.toISOString().slice(0,10) + ' [Nuevo]';
-
-            header.appendChild(authorSpan);
-            header.appendChild(dateSpan);
-
-            const body = document.createElement('div');
-            body.className = 'comment-body';
-            body.textContent = text;
-
-            card.appendChild(header);
-            card.appendChild(body);
-
-            container.prepend(card);
-            document.getElementById('commentText').value = '';
-        }
+            btn.disabled = false;
+            btn.innerText = 'LANZAR A LA FOGATA';
+        });
     </script>
 </body>
 </html>
