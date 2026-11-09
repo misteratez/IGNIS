@@ -31,16 +31,45 @@
         header {
             border-bottom: 2px dashed var(--accent-red);
             padding-bottom: 15px; margin-bottom: 20px; text-align: center;
+            position: relative;
         }
+        
+        /* Controles superiores: Izquierda (Volver) y Derecha (Login) */
+        .top-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .return-home {
+            display: inline-block;
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            color: #888;
+            text-decoration: none;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .return-home:hover { background-color: #333; color: white; }
+
+        .login-container { text-align: right; }
 
         h1 { color: var(--accent-red); font-size: 1.8rem; margin: 0 0 5px 0; }
         .subtitle { font-size: 0.9rem; color: #888; margin-bottom: 15px; }
-        .login-container { text-align: center; margin-bottom: 20px; }
 
         .manifesto {
             background-color: var(--panel-bg); border: 1px solid var(--border-color);
             padding: 15px; margin-bottom: 25px; font-size: 0.9rem; line-height: 1.4;
         }
+        
+        .manifesto p { margin-top: 0; margin-bottom: 12px; }
+        .manifesto p:last-child { margin-bottom: 0; }
+        
+        .manifesto a { color: var(--accent-red); text-decoration: none; font-weight: bold; }
+        .manifesto a:hover { text-decoration: underline; }
 
         .post-box {
             background-color: var(--panel-bg); border: 1px solid var(--border-color);
@@ -94,13 +123,19 @@
 
     <div class="container">
         <header>
+            <div class="top-controls">
+                <a href="https://www.misteratez.cl" class="return-home">← VOLVER AL INICIO</a>
+                <div class="login-container"><div data-netlify-identity-menu></div></div>
+            </div>
+            
             <h1>[ IGNIS: LA FOGATA ]</h1>
-            <div class="subtitle">Foro Comunitario / Prende tu mente / Filtro IEEH</div>
-            <div class="login-container"><div data-netlify-identity-menu></div></div>
+            <div class="subtitle">Foro Comunitario / Prende tu mente</div>
         </header>
 
         <div class="manifesto">
-            > <strong>Manifiesto:</strong> El internet nos prometió conexión pero nos entregó una jaula de egos. Volvemos al texto, al foco y a la conversación real. Identifícate arriba para encender tu idea.
+            <p><strong>Okey gente,</strong> ¿están chatos del ruido digital? Internet nos prometió conexión, pero nos hiperfragmentó en una jaula de contenidos sin proposito. Por eso levanté IGNIS: La Fogata, un foro 100% texto, sin algoritmos tóxicos, para conversar de verdad y volver a lo humano.</p>
+            <p>Las lucas para los servidores y las IAs (mis "productoras ejecutivas") salen del Patreon ($5 USD). Ahí les suelto guiones y trucos para desconectar.</p>
+            <p><a href="https://www.patreon.com/misteratez/posts/bienvenidos-de-y-174790208" target="_blank">Pasen al Patreon a ver de qué trata el trato.</a></p>
         </div>
 
         <div class="post-box" id="postBox">
@@ -169,16 +204,22 @@
                 const card = document.createElement('div');
                 card.className = 'comment-card';
                 
-                const dateText = data.createdAt ? data.createdAt.toDate().toISOString().slice(0,10) : 'Justo ahora';
+                // Configurar formato de Fecha y Hora
+                let dateText = 'Justo ahora';
+                if (data.createdAt) {
+                    const dateObj = data.createdAt.toDate();
+                    const fecha = dateObj.toLocaleDateString('es-CL');
+                    const hora = dateObj.toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' });
+                    dateText = `${fecha} [${hora}]`;
+                }
 
-                // Se construye el HTML interno
                 const header = document.createElement('div');
                 header.className = 'comment-header';
                 header.innerHTML = `<span class="comment-author">${data.author}</span><span>${dateText}</span>`;
 
                 const body = document.createElement('div');
                 body.className = 'comment-body';
-                body.textContent = data.text; // Seguro contra inyección de código
+                body.textContent = data.text; 
 
                 card.appendChild(header);
                 card.appendChild(body);
