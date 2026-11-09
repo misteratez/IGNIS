@@ -60,6 +60,32 @@
         h1 { color: var(--accent-red); font-size: 1.8rem; margin: 0 0 5px 0; }
         .subtitle { font-size: 0.9rem; color: #888; margin-bottom: 15px; }
 
+        /* Contenedor del video */
+        .video-wrapper {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            margin-bottom: 25px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* Ratio 16:9 */
+            height: 0;
+            overflow: hidden;
+            border: 1px solid #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            opacity: 0.9;
+        }
+
         .manifesto {
             background-color: var(--panel-bg); border: 1px solid var(--border-color);
             padding: 15px; margin-bottom: 25px; font-size: 0.9rem; line-height: 1.4;
@@ -131,6 +157,18 @@
             <h1>[ IGNIS: LA FOGATA ]</h1>
             <div class="subtitle">Foro Comunitario / Prende tu mente</div>
         </header>
+
+        <!-- SEÑAL IGNIS: Reproductor Playlist 24/7 -->
+        <div class="video-wrapper">
+            <h3 style="margin-top:0; font-size:0.9rem; color:var(--accent-red); margin-bottom: 10px;">> SEÑAL IGNIS EN VIVO</h3>
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/videoseries?list=PLxhoJcgrXPmhho47Kw1aWzfaB9A2uQZSn&autoplay=1&loop=1&mute=1&modestbranding=1" 
+                    allow="autoplay; encrypted-media" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
 
         <div class="manifesto">
             <p><strong>Okey gente,</strong> ¿están chatos del ruido digital? Internet nos prometió conexión, pero nos hiperfragmentó en una jaula de contenidos sin proposito. Por eso levanté IGNIS: La Fogata, un foro 100% texto, sin algoritmos tóxicos, para conversar de verdad y volver a lo humano.</p>
