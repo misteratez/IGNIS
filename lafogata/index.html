@@ -34,10 +34,10 @@
             position: relative;
         }
         
-        /* Controles superiores: Izquierda (Volver) y Derecha (Login) */
+        /* Controles superiores - Sin Login Aquí */
         .top-controls {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             margin-bottom: 15px;
         }
@@ -55,22 +55,34 @@
 
         .return-home:hover { background-color: #333; color: white; }
 
-        .login-container { 
-            text-align: right; 
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 5px;
-        }
-        
-        .login-prompt-text {
-            font-size: 0.75rem;
-            color: var(--accent-red);
-            font-weight: bold;
-        }
-
         h1 { color: var(--accent-red); font-size: 1.8rem; margin: 0 0 5px 0; }
         .subtitle { font-size: 0.9rem; color: #888; margin-bottom: 15px; }
+
+        /* Contenedor del video */
+        .video-wrapper {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            margin-bottom: 25px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border: 1px solid #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            opacity: 0.9;
+        }
 
         .manifesto {
             background-color: var(--panel-bg); border: 1px solid var(--border-color);
@@ -85,7 +97,16 @@
 
         .post-box {
             background-color: var(--panel-bg); border: 1px solid var(--border-color);
-            padding: 15px; margin-bottom: 25px; display: none; 
+            padding: 15px; margin-bottom: 25px; 
+        }
+        
+        .post-box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .post-box textarea {
@@ -98,6 +119,15 @@
             width: 100%; background-color: #1a1a1a; border: 1px dashed var(--border-color);
             color: #888; font-family: var(--font-mono); padding: 8px;
             box-sizing: border-box; margin-bottom: 10px; cursor: not-allowed;
+        }
+
+        .login-prompt-text {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--accent-red);
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: left;
         }
 
         button, .netlify-identity-button {
@@ -124,6 +154,22 @@
 
         .comment-author { color: var(--text-color); font-weight: bold; }
         .comment-body { font-size: 0.95rem; white-space: pre-wrap; }
+        
+        /* Estilos para el sistema de respuestas */
+        .replies-container {
+            margin-top: 15px;
+            padding-left: 15px;
+            border-left: 2px solid #333;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .reply-card {
+            background-color: #151515;
+            padding: 10px;
+            border: 1px solid #222;
+        }
 
         footer {
             text-align: center; margin-top: 40px; font-size: 0.8rem;
@@ -137,27 +183,45 @@
         <header>
             <div class="top-controls">
                 <a href="https://www.misteratez.cl" class="return-home">← VOLVER AL INICIO</a>
-                <div class="login-container">
-                    <span id="loginMessage" class="login-prompt-text">> Logéate aquí para comentar en la fogata</span>
-                    <div data-netlify-identity-menu></div>
-                </div>
             </div>
             
             <h1>[ IGNIS: LA FOGATA ]</h1>
             <div class="subtitle">Foro Comunitario / Prende tu mente</div>
         </header>
 
+        <!-- SEÑAL IGNIS: Reproductor Playlist 24/7 -->
+        <div class="video-wrapper">
+            <h3 style="margin-top:0; font-size:0.9rem; color:var(--accent-red); margin-bottom: 10px;">> SEÑAL IGNIS EN VIVO</h3>
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/videoseries?list=PLxhoJcgrXPmhho47Kw1aWzfaB9A2uQZSn&autoplay=1&loop=1&mute=1&modestbranding=1" 
+                    allow="autoplay; encrypted-media" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+
         <div class="manifesto">
             <p><strong>Okey gente,</strong> ¿están chatos del ruido digital? Internet nos prometió conexión, pero nos hiperfragmentó en una jaula de contenidos sin proposito. Por eso levanté IGNIS: La Fogata, un foro 100% texto, sin algoritmos tóxicos, para conversar de verdad y volver a lo humano.</p>
             <p>Las lucas para los servidores y las IAs (mis "productoras ejecutivas") salen del Patreon ($5 USD). Ahí les suelto guiones y trucos para desconectar.</p>
-            <p><a href="https://www.patreon.com/misteratez/posts/bienvenidos-de-y-174790208" target="_blank">Pasen al Patreon a ver de qué trata el trato.</a></p>
+            <p><a href="https://patreon.com/misteratez" target="_blank">Pasen al Patreon a ver de qué trata el trato.</a></p>
         </div>
 
-        <div class="post-box" id="postBox">
-            <h3 style="margin-top:0; font-size:1rem; color:var(--accent-red);">> ENCIENDE UN HILO</h3>
-            <input type="text" id="authorName" disabled />
-            <textarea id="commentText" placeholder="Comparte una idea, un tema para educar, informar o debatir sin prisa..."></textarea>
-            <button id="postBtn">LANZAR A LA FOGATA</button>
+        <!-- Caja de comentarios y Log In Integrado -->
+        <div class="post-box" id="postBoxContainer">
+            <div class="post-box-header">
+                <h3 style="margin:0; font-size:1rem; color:var(--accent-red);">> ENCIENDE UN HILO</h3>
+                <!-- Los botones de sesión ahora viven aquí adentro -->
+                <div data-netlify-identity-menu></div>
+            </div>
+            
+            <span id="loginMessage" class="login-prompt-text">> Logéate aquí arriba para encender un hilo en la fogata.</span>
+            
+            <div id="postBoxControls" style="display: none;">
+                <input type="text" id="authorName" disabled />
+                <textarea id="commentText" placeholder="Comparte una idea, un tema para educar, informar o debatir sin prisa..."></textarea>
+                <button id="postBtn">LANZAR A LA FOGATA</button>
+            </div>
         </div>
 
         <div class="thread-list" id="threadContainer">
@@ -172,7 +236,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
-        // Tu configuración maestra de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBDQ7km9lvkDnGxGfHUhBBdxOBsJbNvvMI",
             authDomain: "ignis-fogata.firebaseapp.com",
@@ -194,23 +257,22 @@
         }
 
         function handleAuthChange() {
-            // Refrescar el estado directamente desde la caché de Netlify si es necesario
             if (!currentUser && window.netlifyIdentity && window.netlifyIdentity.currentUser()) {
                 currentUser = window.netlifyIdentity.currentUser();
             }
 
             if (currentUser) {
-                document.getElementById('postBox').style.display = 'block';
+                document.getElementById('postBoxControls').style.display = 'block';
                 document.getElementById('loginMessage').style.display = 'none';
                 const userName = currentUser.user_metadata?.full_name || currentUser.email.split('@')[0];
                 document.getElementById('authorName').value = userName;
             } else {
-                document.getElementById('postBox').style.display = 'none';
+                document.getElementById('postBoxControls').style.display = 'none';
                 document.getElementById('loginMessage').style.display = 'block';
             }
         }
 
-        // Leer comentarios en tiempo real desde Firebase
+        // Leer comentarios y respuestas en tiempo real desde Firebase
         const q = query(collection(db, "comentarios"), orderBy("createdAt", "desc"));
         onSnapshot(q, (snapshot) => {
             const container = document.getElementById('threadContainer');
@@ -221,8 +283,14 @@
                 return;
             }
 
-            snapshot.forEach((doc) => {
-                const data = doc.data();
+            // Separar Hilos Principales de Respuestas
+            const allComments = [];
+            snapshot.forEach(doc => allComments.push({ id: doc.id, ...doc.data() }));
+
+            const mainThreads = allComments.filter(c => !c.parentId);
+            const replies = allComments.filter(c => c.parentId);
+
+            mainThreads.forEach((data) => {
                 const card = document.createElement('div');
                 card.className = 'comment-card';
                 
@@ -234,6 +302,7 @@
                     dateText = `${fecha} [${hora}]`;
                 }
 
+                // Cabecera e Hilo principal
                 const header = document.createElement('div');
                 header.className = 'comment-header';
                 header.innerHTML = `<span class="comment-author">${data.author}</span><span>${dateText}</span>`;
@@ -244,11 +313,118 @@
 
                 card.appendChild(header);
                 card.appendChild(body);
+
+                // Inyectar las respuestas si existen
+                const threadReplies = replies.filter(r => r.parentId === data.id).sort((a, b) => {
+                    if (!a.createdAt || !b.createdAt) return 0;
+                    return a.createdAt.toMillis() - b.createdAt.toMillis(); // Respuestas más antiguas arriba
+                });
+
+                if (threadReplies.length > 0) {
+                    const repliesContainer = document.createElement('div');
+                    repliesContainer.className = 'replies-container';
+                    
+                    threadReplies.forEach(replyData => {
+                        const replyCard = document.createElement('div');
+                        replyCard.className = 'reply-card';
+
+                        let replyDateText = 'Justo ahora';
+                        if (replyData.createdAt) {
+                            const rDateObj = replyData.createdAt.toDate();
+                            replyDateText = `${rDateObj.toLocaleDateString('es-CL')} [${rDateObj.toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' })}]`;
+                        }
+
+                        replyCard.innerHTML = `
+                            <div class="comment-header" style="border-bottom:none; margin-bottom:4px; padding-bottom:0;">
+                                <span class="comment-author" style="color:#aaa;">↳ ${replyData.author}</span>
+                                <span style="font-size:0.7rem;">${replyDateText}</span>
+                            </div>
+                            <div class="comment-body" style="font-size:0.85rem; color:#ccc;">${replyData.text}</div>
+                        `;
+                        repliesContainer.appendChild(replyCard);
+                    });
+                    card.appendChild(repliesContainer);
+                }
+
+                // Botón y Formulario oculto para Responder
+                const replyActionDiv = document.createElement('div');
+                replyActionDiv.style.marginTop = '15px';
+                replyActionDiv.style.borderTop = '1px dashed var(--border-color)';
+                replyActionDiv.style.paddingTop = '10px';
+
+                const replyBtnToggle = document.createElement('button');
+                replyBtnToggle.textContent = 'Responder';
+                replyBtnToggle.style.backgroundColor = 'transparent';
+                replyBtnToggle.style.border = '1px solid var(--accent-red)';
+                replyBtnToggle.style.color = 'var(--accent-red)';
+                replyBtnToggle.style.fontSize = '0.75rem';
+                replyBtnToggle.style.padding = '4px 8px';
+
+                const replyForm = document.createElement('div');
+                replyForm.style.display = 'none';
+                replyForm.style.marginTop = '10px';
+
+                const replyTextarea = document.createElement('textarea');
+                replyTextarea.placeholder = 'Tu respuesta al hilo...';
+                replyTextarea.style.width = '100%';
+                replyTextarea.style.backgroundColor = '#0b0b0b';
+                replyTextarea.style.border = '1px solid var(--border-color)';
+                replyTextarea.style.color = 'var(--text-color)';
+                replyTextarea.style.fontFamily = 'var(--font-mono)';
+                replyTextarea.style.padding = '8px';
+                replyTextarea.style.marginBottom = '5px';
+                replyTextarea.style.resize = 'vertical';
+                replyTextarea.style.height = '60px';
+
+                const sendReplyBtn = document.createElement('button');
+                sendReplyBtn.textContent = 'ENVIAR RESPUESTA';
+                sendReplyBtn.style.fontSize = '0.8rem';
+
+                replyForm.appendChild(replyTextarea);
+                replyForm.appendChild(sendReplyBtn);
+                
+                replyActionDiv.appendChild(replyBtnToggle);
+                replyActionDiv.appendChild(replyForm);
+                card.appendChild(replyActionDiv);
+
+                // Lógica de visualización del form de respuesta
+                replyBtnToggle.addEventListener('click', () => {
+                    if (!currentUser) {
+                        alert('Debes logearte en la parte superior para poder responder hilos.');
+                        return;
+                    }
+                    replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+                });
+
+                // Lógica de envío de respuesta
+                sendReplyBtn.addEventListener('click', async () => {
+                    const txt = replyTextarea.value.trim();
+                    if (!txt) return;
+                    sendReplyBtn.disabled = true;
+                    sendReplyBtn.innerText = 'ENVIANDO...';
+
+                    try {
+                        await addDoc(collection(db, "comentarios"), {
+                            author: document.getElementById('authorName').value || 'Anónimo',
+                            text: txt,
+                            createdAt: serverTimestamp(),
+                            parentId: data.id // Enlaza la respuesta al hilo principal
+                        });
+                        replyTextarea.value = '';
+                        replyForm.style.display = 'none';
+                    } catch (error) {
+                        console.error("Error guardando respuesta:", error);
+                        alert('Hubo un error de conexión con la base de datos.');
+                    }
+                    sendReplyBtn.disabled = false;
+                    sendReplyBtn.innerText = 'ENVIAR RESPUESTA';
+                });
+
                 container.appendChild(card);
             });
         });
 
-        // Enviar nuevo comentario a Firebase
+        // Enviar nuevo HILO PRINCIPAL a Firebase
         document.getElementById('postBtn').addEventListener('click', async () => {
             const author = document.getElementById('authorName').value;
             const text = document.getElementById('commentText').value.trim();
@@ -263,7 +439,8 @@
                 await addDoc(collection(db, "comentarios"), {
                     author: author,
                     text: text,
-                    createdAt: serverTimestamp()
+                    createdAt: serverTimestamp(),
+                    parentId: null // Hilo principal no tiene padre
                 });
                 document.getElementById('commentText').value = '';
             } catch (error) {
